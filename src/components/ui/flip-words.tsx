@@ -3,6 +3,9 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, LayoutGroup } from "motion/react";
 import { cn } from "@/lib/utils";
 
+const CONNECTED_SCRIPT_REGEX = /[\u0600-\u06FF\u0900-\u097F]/;
+const isConnectedScript = (text: string) => CONNECTED_SCRIPT_REGEX.test(text);
+
 export const FlipWords = ({
   words,
   duration = 3000,
@@ -62,7 +65,7 @@ export const FlipWords = ({
           className
         )}
         key={currentWord}
-      >
+      >     
         {/* edit suggested by Sajal: https://x.com/DewanganSajal */}
         {currentWord.split(" ").map((word, wordIndex) => (
           <motion.span
@@ -75,7 +78,21 @@ export const FlipWords = ({
             }}
             className="inline-block whitespace-nowrap"
           >
-            {word.split("").map((letter, letterIndex) => (
+            {isConnectedScript(word) ? (
+              <motion.span
+                initial={{ opacity: 0, y: 10, filter: "blur(8px)" }}
+                animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+              transition={{
+                delay: wordIndex * 0.3,
+                duration: 0.3,
+              }}
+              className="inline-block"
+            >
+              {word}
+            </motion.span>
+            ) :
+            
+            word.split("").map((letter, letterIndex) => (
               <motion.span
                 key={word + letterIndex}
                 initial={{ opacity: 0, y: 10, filter: "blur(8px)" }}
