@@ -317,7 +317,7 @@ export default function HomePage() {
         </div>
       </div>
 
-        <div className="mt-auto mb-8 w-full py-8 md:mb-4">
+        <div className="mt-auto mb-8 w-full py-8">
           <Marquee className="h-64 w-full">
             <MarqueeFade side="left" className="w-12" />
             <MarqueeContent speed={100} pauseOnHover autoFill={false}>
