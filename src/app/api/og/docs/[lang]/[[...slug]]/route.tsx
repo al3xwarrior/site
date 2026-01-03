@@ -5,40 +5,48 @@ import { NextRequest } from "next/server";
 import { notFound } from "next/navigation";
 import { readFile } from "fs/promises";
 import { join } from "path";
+import { ogLanguageBlacklist } from "@/lib/i18n";
+
+const promises: Promise<Buffer>[] = [];
+
+// prettier-ignore
+{
+  // promises.push(readFile(join(process.cwd(), "assets/geist/Geist-Thin.otf")));
+  // promises.push(readFile(join(process.cwd(), "assets/geist/Geist-ThinItalic.otf")));
+  // promises.push(readFile(join(process.cwd(), "assets/geist/Geist-ExtraLight.otf")));
+  // promises.push(readFile(join(process.cwd(), "assets/geist/Geist-ExtraLightItalic.otf")));
+  // promises.push(readFile(join(process.cwd(), "assets/geist/Geist-Light.otf")));
+  // promises.push(readFile(join(process.cwd(), "assets/geist/Geist-LightItalic.otf")));
+  promises.push(readFile(join(process.cwd(), "assets/geist/Geist-Regular.otf")));
+  promises.push(readFile(join(process.cwd(), "assets/geist/Geist-RegularItalic.otf")));
+  // promises.push(readFile(join(process.cwd(), "assets/geist/Geist-Medium.otf")));
+  // promises.push(readFile(join(process.cwd(), "assets/geist/Geist-MediumItalic.otf")));
+  promises.push(readFile(join(process.cwd(), "assets/geist/Geist-SemiBold.otf")));
+  promises.push(readFile(join(process.cwd(), "assets/geist/Geist-SemiBoldItalic.otf")));
+  // promises.push(readFile(join(process.cwd(), "assets/geist/Geist-Bold.otf")));
+  // promises.push(readFile(join(process.cwd(), "assets/geist/Geist-BoldItalic.otf")));
+  // promises.push(readFile(join(process.cwd(), "assets/geist/Geist-ExtraBold.otf")));
+  // promises.push(readFile(join(process.cwd(), "assets/geist/Geist-ExtraBoldItalic.otf")));
+  // promises.push(readFile(join(process.cwd(), "assets/geist/Geist-Black.otf")));
+  // promises.push(readFile(join(process.cwd(), "assets/geist/Geist-BlackItalic.otf")));
+
+  promises.push(readFile(join(process.cwd(), "public/branding/logo-light-348.png")));
+}
 
 export async function GET(
   _request: NextRequest,
   { params }: { params: Promise<{ lang: string; slug?: string[] }> },
 ) {
   const { lang, slug = [] } = await params;
+
+  if (ogLanguageBlacklist.includes(lang)) {
+    return notFound();
+  }
+
   const page = source.getPage(slug, lang);
 
   if (!page) {
     return notFound();
-  }
-
-  const promises = [];
-
-  // prettier-ignore
-  {
-    // promises.push(readFile(join(process.cwd(), "assets/geist/Geist-Thin.otf")));
-    // promises.push(readFile(join(process.cwd(), "assets/geist/Geist-ThinItalic.otf")));
-    // promises.push(readFile(join(process.cwd(), "assets/geist/Geist-ExtraLight.otf")));
-    // promises.push(readFile(join(process.cwd(), "assets/geist/Geist-ExtraLightItalic.otf")));
-    // promises.push(readFile(join(process.cwd(), "assets/geist/Geist-Light.otf")));
-    // promises.push(readFile(join(process.cwd(), "assets/geist/Geist-LightItalic.otf")));
-    promises.push(readFile(join(process.cwd(), "assets/geist/Geist-Regular.otf")));
-    promises.push(readFile(join(process.cwd(), "assets/geist/Geist-RegularItalic.otf")));
-    // promises.push(readFile(join(process.cwd(), "assets/geist/Geist-Medium.otf")));
-    // promises.push(readFile(join(process.cwd(), "assets/geist/Geist-MediumItalic.otf")));
-    promises.push(readFile(join(process.cwd(), "assets/geist/Geist-SemiBold.otf")));
-    promises.push(readFile(join(process.cwd(), "assets/geist/Geist-SemiBoldItalic.otf")));
-    // promises.push(readFile(join(process.cwd(), "assets/geist/Geist-Bold.otf")));
-    // promises.push(readFile(join(process.cwd(), "assets/geist/Geist-BoldItalic.otf")));
-    // promises.push(readFile(join(process.cwd(), "assets/geist/Geist-ExtraBold.otf")));
-    // promises.push(readFile(join(process.cwd(), "assets/geist/Geist-ExtraBoldItalic.otf")));
-    // promises.push(readFile(join(process.cwd(), "assets/geist/Geist-Black.otf")));
-    // promises.push(readFile(join(process.cwd(), "assets/geist/Geist-BlackItalic.otf")));
   }
 
   const [
