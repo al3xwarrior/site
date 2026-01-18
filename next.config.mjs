@@ -55,8 +55,8 @@ const config = {
         permanent: true,
       },
       {
-        source: "en/docs/guides/ecs/hytale-ecs",
-        destination: "en/docs/guides/ecs/hytale-ecs-theory",
+        source: "/en/docs/guides/ecs/hytale-ecs",
+        destination: "/en/docs/guides/ecs/hytale-ecs-theory",
         permanent: true,
       },
     ];
