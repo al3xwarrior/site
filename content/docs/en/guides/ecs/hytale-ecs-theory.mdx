@@ -210,7 +210,7 @@ This might seem tedious at first but it ensures that your component can be corre
     KeyedCodec<Integer> exampleInt = new KeyedCodec<Integer>("ExampleIntIdForCodec", Codec.INTEGER);
     ```
 
-- **Setter Function**: This is a lambda function that takes an instance of your component and returns the value of the field you want to serialize. For example, if you have a field called `myCustomField` in your custom component, your getter function would look like this:
+- **Setter Function**: This is a lambda function that takes an instance of your component + the value to set and sets the field value on the component. For example, if you have a field called `myCustomField` in your custom component, your setter function would look like this:
     ```java
     (data, value) -> data.myCustomField = value
     ```
