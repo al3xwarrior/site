@@ -8,13 +8,97 @@ authors:
 
 <OfficialDocumentationNotice />
 
-### Box
+### Cuboid
 
-This is a testing and debugging Prop asset that generates a box. This Prop uses a Pattern and a Scanner to locate a suitable spot relative to its provided position.
+Places a cuboid made from the provided materials.
 
-#### Parameters:
+##### Parameters
 
-<table><thead><tr><th width="172.96038818359375">Name</th><th width="222.3663330078125">Type</th><th>Description</th></tr></thead><tbody><tr><td>Range</td><td>3D positive integer vector</td><td>Determines the distance in blocks between the Prop’s center and each side.</td></tr><tr><td>Range.X</td><td>integer</td><td>Distance in the x-axis.</td></tr><tr><td>Range.Y</td><td>integer</td><td>Distance in the y-axis.</td></tr><tr><td>Range.Z</td><td>integer</td><td>Distance in the z-axis.</td></tr><tr><td>BoxBlockType</td><td>BlockType</td><td>The BlockType the box is made of.</td></tr><tr><td>Pattern</td><td>Pattern asset slot</td><td>Defines a suitable spot.</td></tr><tr><td>Scanner</td><td>Scanner asset slot</td><td>Scans the surroundings for a suitable spot for this Prop.</td></tr></tbody></table>
+<table><thead><tr><th width="202.42584228515625">Name</th><th width="242.53466796875">Type</th><th>Description</th></tr></thead><tbody><tr><td>Bounds</td><td>Bounds</td><td>Size of the cuboid.</td></tr><tr><td>Material</td><td>MaterialProvider slot</td><td>The materials the cuboid is made of.</td></tr></tbody></table>
+
+---
+
+### Manual
+
+Places manually configured blocks.
+
+##### Parameters
+
+<table><thead><tr><th width="202.42584228515625">Name</th><th width="242.53466796875">Type</th><th>Description</th></tr></thead><tbody><tr><td>Blocks</td><td>Positioned block</td><td>Block relative to the Prop's anchor.</td></tr></tbody></table>
+
+---
+
+### Locator
+
+Locates a valid position using a Pattern and a Scanner.
+
+##### Parameters
+
+<table><thead><tr><th width="202.42584228515625">Name</th><th width="242.53466796875">Type</th><th>Description</th></tr></thead><tbody><tr><td>Prop</td><td>Prop slot</td><td>Prop to place at valid positions.</td></tr><tr><td>Pattern</td><td>Pattern slot</td><td>Defines what valid locations look like.</td></tr><tr><td>Scanner</td><td>Scanner slot</td><td>Scans relative to the anchor for valid locations.</td></tr><tr><td>PlacementCap</td><td>Integer ≥ 0</td><td>Limits the number of valid locations in which the child Prop is generated.</td></tr></tbody></table>
+
+---
+
+### Orienter
+
+Locates valid positions and orients the child Prop accordingly.
+
+Automatically checks the Pattern in different rotations and rotates the child Prop accordingly.
+
+##### Parameters
+
+<table><thead><tr><th width="202.42584228515625">Name</th><th width="242.53466796875">Type</th><th>Description</th></tr></thead><tbody><tr><td>Prop</td><td>Prop slot</td><td>Prop to place at valid positions.</td></tr><tr><td>Rotations</td><td>list of Rotations</td><td>Possible rotations.</td></tr><tr><td>Pattern</td><td>Pattern slot</td><td>Defines what valid locations look like.</td></tr><tr><td>Scanner</td><td>Scanner slot</td><td>Scans relative to the anchor for valid locations.</td></tr><tr><td>SelectionMode</td><td>String (<code>FirstValid</code> | <code>AllValid</code> | <code>RandomValid</code>)</td><td>Determines which valid rotation is generated:<br>- <code>FirstValid</code>: The first valid rotation in the Rotations list.<br>- <code>AllValid</code>: All valid rotations in the Rotations list.<br>- <code>RandomValid</code>: Picks one of the valid Rotations at random.</td></tr><tr><td>Seed</td><td>String</td><td>Determines which position is picked if <code>RandomValid</code>.</td></tr></tbody></table>
+
+---
+
+### Queue
+
+Places the first Prop in the list that generates, and skips the rest.
+
+##### Parameters
+
+<table><thead><tr><th width="202.42584228515625">Name</th><th width="242.53466796875">Type</th><th>Description</th></tr></thead><tbody><tr><td>Props</td><td>list of Prop slots</td><td>Ordered list making up the queue.</td></tr></tbody></table>
+
+---
+
+### Mask
+
+Masks the blocks placed by the child.
+
+##### Parameters
+
+<table><thead><tr><th width="202.42584228515625">Name</th><th width="242.53466796875">Type</th><th>Description</th></tr></thead><tbody><tr><td>Prop</td><td>Prop slot</td><td>Prop to mask.</td></tr><tr><td>Mask</td><td>BlockMask</td><td>Determines which materials are allowed to be placed.</td></tr></tbody></table>
+
+---
+
+### StaticRotator
+
+Rotates the child Prop by a static Rotation.
+
+##### Parameters
+
+<table><thead><tr><th width="202.42584228515625">Name</th><th width="242.53466796875">Type</th><th>Description</th></tr></thead><tbody><tr><td>Prop</td><td>Prop slot</td><td>Prop to rotate.</td></tr><tr><td>Rotation</td><td>Rotation</td><td>Child Prop's rotation relative to this Prop's direction.</td></tr></tbody></table>
+
+---
+
+### RandomRotator
+
+Rotates the child Prop by a random Rotation.
+
+##### Parameters
+
+<table><thead><tr><th width="202.42584228515625">Name</th><th width="242.53466796875">Type</th><th>Description</th></tr></thead><tbody><tr><td>Prop</td><td>Prop slot</td><td>Prop to rotate.</td></tr><tr><td>Rotations</td><td>list of Rotations</td><td>The rotations to pick from.</td></tr><tr><td>HorizontalRotations</td><td>Boolean</td><td>Reduces the need to define four extra nodes for all X/Z rotations by adding them all automatically. Don’t use the Rotations pin if you enable this.</td></tr><tr><td>Seed</td><td>String</td><td>Determines which Rotation to pick.</td></tr></tbody></table>
+
+---
+
+### DensitySelector
+
+Selects a child Prop based on a Density field.
+
+The first delimiter whose range contains the Density value at the Prop’s position determines the child Prop to use.
+
+##### Parameters
+
+<table><thead><tr><th width="202.42584228515625">Name</th><th width="242.53466796875">Type</th><th>Description</th></tr></thead><tbody><tr><td>Delimiters</td><td>list of Delimiters</td><td>Determines which Prop is selected for which regions of the Density field.</td></tr><tr><td>Density</td><td>Density slot</td><td>The Density field.</td></tr></tbody></table>
 
 ---
 
@@ -26,59 +110,28 @@ Below is an example of terrain with smaller dirt boulders on top of large stone 
 
 ![Example of Density Prop](/assets/official-documentation/worldgen/technical-hytale-generator/props/density-prop-example.png)
 
-{/* <figure><img src="../../.gitbook/assets/image (61).png" alt=""><figcaption></figcaption></figure> */}
 
-#### Parameters:
+##### Parameters
 
-<table><thead><tr><th width="154.90106201171875">Name</th><th width="218.05938720703125">Type</th><th>Description</th></tr></thead><tbody><tr><td>Range</td><td>3D positive integer vector</td><td>Determines the distance in blocks between the Prop’s center and each side.</td></tr><tr><td>Range.X</td><td>integer</td><td>Distance in the x-axis.</td></tr><tr><td>Range.Y</td><td>integer</td><td>Distance in the y-axis.</td></tr><tr><td>Range.Z</td><td>integer</td><td>Distance in the z-axis.</td></tr><tr><td>PlacementMask</td><td>BlockMask asset slot</td><td>Sets the rules for what blocks can be placed and what blocks can be replaced in the world.</td></tr><tr><td>Pattern</td><td>Pattern asset slot</td><td>Defines a suitable spot.</td></tr><tr><td>Scanner</td><td>Scanner asset slot</td><td>Scans the surroundings for a suitable spot for this Prop.</td></tr><tr><td>Density</td><td>Density asset slot</td><td>Gives shape to the Prop.</td></tr><tr><td>Material</td><td>MaterialProvider asset slot</td><td>Determines the block types to use.</td></tr></tbody></table>
+<table><thead><tr><th width="154.90106201171875">Name</th><th width="218.05938720703125">Type</th><th>Description</th></tr></thead><tbody><tr><td>Bounds</td><td>Bounds</td><td>The maximum reach.</td></tr><tr><td>Density</td><td>Density asset slot</td><td>Gives shape to the Prop.</td></tr><tr><td>Material</td><td>MaterialProvider asset slot</td><td>Determines the block types to use.</td></tr></tbody></table>
 
 ---
 
 ### Prefab
 
-This Prop places a Prefab in a suitable spot. This Prop uses a Directionality asset, a Pattern and a Scanner to locate a suitable spot relative to its provided position. A BlockMask asset can also be used to specify which Materials the Prefab cannot replace in the world, which Materials the Prefab cannot place, and even which world Materials cannot be replaced by specific Prefab Materials. See the BlockMask documentation.
+Places a Prefab from the weighted paths.
 
-The Prefab Prop also supports molding to the terrain. To enable molding, specify `MoldingDirection` as `DOWN` or `UP`. Provide a `MoldingScanner` and `MoldingPattern`. To mold the Prefab’s children, set `MoldingChildren` to `true`. I recommend using a `LinearScanner` with `Local` set to `true` for the `MoldingScanner`. Limit `ResultCap` to `1`. In a typical ruin Prefab, use the molding scanner and pattern to find a floor or ceiling.
+##### Parameters
 
-#### Parameters:
-
-<table><thead><tr><th width="202.42584228515625">Name</th><th width="242.53466796875">Type</th><th>Description</th></tr></thead><tbody><tr><td>WeightedPrefabPaths</td><td>list of weighted paths to files or folders containing prefabs</td><td>Each path entry contains the keys below.</td></tr><tr><td>WeightedPrefabPaths[].Path</td><td>string</td><td>Path to the folder or file to load from.</td></tr><tr><td>WeightedPrefabPaths[].Weight</td><td>number (> 0)</td><td>Weight for placing a prefab from this path. If the path points to a folder, the weight applies to the folder pick. Once picked, all prefabs inside have equal chance.</td></tr><tr><td>WeightedPrefabPaths[].LegacyPath</td><td>boolean (optional)</td><td>If <code>true</code>, looks in <code>HytaleAssets/Server/World/Default/Prefabs/\{PrefabPath\}</code>. Otherwise looks in <code>HytaleAssets/Server/WorldgenAlt/Prefabs/\{PrefabPath\}</code>.</td></tr><tr><td>Directionality</td><td>Directionality asset slot</td><td>Defines the valid positions and the direction the Prop should place with. See the Directionality asset documentation below.</td></tr><tr><td>Scanner</td><td>Scanner asset slot</td><td>Scans the surroundings for a suitable spot for this Prop.</td></tr><tr><td>BlockMask</td><td>BlockMask asset slot</td><td>Defines masking for this Prefab’s block placement.</td></tr><tr><td>MoldingDirection</td><td>string (optional, defaults to <code>NONE</code>)</td><td>Values: <code>UP</code>, <code>DOWN</code>, <code>NONE</code>.</td></tr><tr><td>MoldingChildren</td><td>boolean (optional)</td><td>If the children also mold.</td></tr><tr><td>MoldingScanner</td><td>Scanner asset slot (optional)</td><td>Scanner used to match <code>MoldingPattern</code>.</td></tr><tr><td>MoldingPattern</td><td>Pattern (optional)</td><td>Used to find a surface to mold Prefab columns to.</td></tr><tr><td>LoadEntities</td><td>boolean (optional)</td><td>If <code>true</code>, entities from the prefabs will be loaded and placed. Applies to prefab children as well.</td></tr></tbody></table>
-
----
-
-### Column
-
-Generates a Prop that is completely contained within a column.
-
-#### Parameters:
-
-<table><thead><tr><th width="153.95050048828125">Name</th><th width="222.86138916015625">Type</th><th>Description</th></tr></thead><tbody><tr><td>ColumnBlocks</td><td>list of BlockTypes and Y coordinates</td><td>The Y coordinates are relative to the Prop’s origin (anchor block).</td></tr><tr><td>ColumnBlocks[].BlockType</td><td>BlockType</td><td>Block type for this entry.</td></tr><tr><td>ColumnBlocks[].Y</td><td>integer</td><td>Y coordinate relative to the Prop’s origin.</td></tr><tr><td>Directionality</td><td>Directionality asset slot</td><td>Defines the valid positions and the direction the Prop should place with. See the Directionality asset documentation below.</td></tr><tr><td>Scanner</td><td>Scanner asset slot</td><td></td></tr><tr><td>BlockMask</td><td>BlockMask asset slot</td><td>Optional.</td></tr></tbody></table>
-
----
-
-### Cluster
-
-Places a cluster of Column type Props relative to its origin. The DistanceCurve determines the density based on the distance from the Cluster’s origin. The Column Props are selected from a weighted list.
-
-The Column Prop assets provided to this Cluster Prop must use Scanner and Pattern assets that only read within the origin column because that is the only space the Cluster Prop will provide to them. If the Column Prop provided reaches outside its column, the Prop will not be used by the Cluster Prop. This is to maintain consistent Context-Dependency.
-
-Below is a diagram showing how the density varies as a function of the distance, and how the DistanceCurve affects it.
-
-![Example of Cluster Prop distance curve](/assets/official-documentation/worldgen/technical-hytale-generator/props/cluster-distance-curve.png)
-
-The Pattern and Scanner asset slots are optional. By default, the Cluster Prop will use the Position it is assigned to. If a Pattern and Scanner are provided, it will use those to position the Cluster’s origin.
-
-#### Parameters:
-
-<table><thead><tr><th width="160.60394287109375">Name</th><th width="179.89111328125">Type</th><th>Description</th></tr></thead><tbody><tr><td>Range</td><td>integer</td><td>Determines the distance in blocks from the origin of the cluster to its limit. A good starting range is <code>10</code>.</td></tr><tr><td>DistanceCurve</td><td>curve</td><td>Determines the chance a block will have a Column Prop based on its distance from the Cluster’s origin.</td></tr><tr><td>Seed</td><td>string</td><td>Used during density and Prop picking from the weighted list.</td></tr><tr><td>Pattern</td><td>Pattern asset slot (optional)</td><td>Used to position the Cluster’s origin.</td></tr><tr><td>Scanner</td><td>Scanner asset slot (optional)</td><td>Used to position the Cluster’s origin.</td></tr><tr><td>WeightedProps</td><td>list of weighted Column Props</td><td>Each element in the list contains the keys below.</td></tr><tr><td>WeightedProps[].Weight</td><td>float (> 0.0)</td><td></td></tr><tr><td>WeightedProps[].ColumnProp</td><td>Column Prop slot</td><td>Slot for a Column Prop asset (only Column Prop assets can be used here). This Prop will only have access to a column to both scan and place. Ensure your Scanner and Pattern assets operate within that column, or the Prop might fail to place. This maintains context dependency consistency.</td></tr></tbody></table>
+<table><thead><tr><th width="202.42584228515625">Name</th><th width="242.53466796875">Type</th><th>Description</th></tr></thead><tbody><tr><td>WeightedPrefabPaths</td><td>list of weighted paths to files or folders containing prefabs</td><td>Each path entry contains the keys below.</td></tr><tr><td>WeightedPrefabPaths[].Path</td><td>string</td><td>Path to the folder or file to load from.</td></tr><tr><td>WeightedPrefabPaths[].Weight</td><td>number (> 0)</td><td>Weight for placing a prefab from this path. If the path points to a folder, the weight applies to the folder pick. Once picked, all prefabs inside have an equal chance.</td></tr></tbody></table>
 
 ---
 
 ### Union
 
-This Prop type places all the Props in the provided list at the same position one after the other.
+Places all the Props in the provided list at the same position, one after another.
 
-#### Parameters:
+##### Parameters
 
 | Name  | Type               | Description              |
 | ----- | ------------------ | ------------------------ |
@@ -90,7 +143,7 @@ This Prop type places all the Props in the provided list at the same position on
 
 Offsets the position of the child Prop.
 
-#### Parameters:
+##### Parameters
 
 <table><thead><tr><th width="127.33660888671875">Name</th><th width="165.52471923828125">Type</th><th>Description</th></tr></thead><tbody><tr><td>Offset</td><td>3D integer vector</td><td>The direction in which to offset the child Prop’s position.</td></tr><tr><td>Prop</td><td>Prop slot</td><td></td></tr></tbody></table>
 
@@ -98,9 +151,9 @@ Offsets the position of the child Prop.
 
 ### Weighted
 
-Picks which Prop to place based on a seed and weights.
+Picks a Prop to place based on a seed and weights.
 
-#### Parameters:
+##### Parameters
 
 <table><thead><tr><th width="166.306884765625">Name</th><th width="159.7821044921875">Type</th><th>Description</th></tr></thead><tbody><tr><td>Entries</td><td>list of weighted Prop entries</td><td>Each entry contains <code>Weight</code> and <code>Prop</code>.</td></tr><tr><td>Entries[].Weight</td><td>number (> 0.0)</td><td></td></tr><tr><td>Entries[].Prop</td><td>Prop slot</td><td></td></tr><tr><td>Seed</td><td>string</td><td>The seed determining which Prop is picked. This seed also mutates the seed passed to the children.</td></tr></tbody></table>
 
@@ -108,29 +161,32 @@ Picks which Prop to place based on a seed and weights.
 
 ### PondFiller
 
-It fills up depressions in the terrain with the provided MaterialProvider.
+Fills depressions in the terrain with the provided MaterialProvider.
 
 The screenshots below show a few examples of ponds generated with this Prop.
 
 ![Example of PondFiller Prop1](/assets/official-documentation/worldgen/technical-hytale-generator/props/pondfiller-example-1.png)
 
+
 ![Example of PondFiller Prop2](/assets/official-documentation/worldgen/technical-hytale-generator/props/pondfiller-example-2.png)
 
-You can configure the bounding box inside which it will identify and fill in existing terrain depressions. The bounding box’s size and shape determine how large the resulting ponds can be.
+
+You can configure the bounding box inside which it will identify and fill existing terrain depressions. The bounding box’s size and shape determine how large the resulting ponds can be.
 
 The diagram below shows how the bounding box defines the outcome.
 
 ![Example of PondFiller bounding box](/assets/official-documentation/worldgen/technical-hytale-generator/props/pondfiller-bounding-box.png)
 
-The Pattern and Scanner can be used to position the origin of the Filler Prop like any other Prop. The origin anchors the bounding box at runtime. The ponds that fit inside that bounding box are filled with the MaterialProvider.
+
+The ponds that fit inside that bounding box are filled with the MaterialProvider.
 
 The BarrierBlockSet defines what the walls of the depressions are made of.
 
 Important: The performance impact of this Prop can be relatively high depending on the size of its bounding box. Because of that, I recommend optimizing the size of its bounding box for each use case.
 
-#### Parameters:
+##### Parameters
 
-<table><thead><tr><th width="151.09912109375">Name</th><th width="202.95050048828125">Type</th><th>Description</th></tr></thead><tbody><tr><td>BoundingMin</td><td>3D point</td><td>Defines the lowest corner of the bounding box relative to the anchor point.</td></tr><tr><td>BoundingMin.X</td><td>floating point number</td><td></td></tr><tr><td>BoundingMin.Y</td><td>floating point number</td><td></td></tr><tr><td>BoundingMin.Z</td><td>floating point number</td><td></td></tr><tr><td>BoundingMax</td><td>3D point asset slot</td><td>Defines the greatest corner of the bounding box relative to the anchor point.</td></tr><tr><td>BoundingMax.X</td><td>floating point number</td><td></td></tr><tr><td>BoundingMax.Y</td><td>floating point number</td><td></td></tr><tr><td>BoundingMax.Z</td><td>floating point number</td><td></td></tr><tr><td>BarrierBlockSet</td><td>BlockSet asset slot</td><td>Defines the types of blocks that can make up the solid terrain, through which the pond material cannot seep.</td></tr><tr><td>FillMaterial</td><td>MaterialProvider asset slot</td><td>Determines the types of blocks used when filling up the ponds (for example, water).</td></tr><tr><td>Pattern</td><td>Pattern asset slot</td><td>Defines a suitable spot.</td></tr><tr><td>Scanner</td><td>Scanner asset slot</td><td>Scans the surroundings for a suitable spot for this Prop.</td></tr></tbody></table>
+<table><thead><tr><th width="151.09912109375">Name</th><th width="202.95050048828125">Type</th><th>Description</th></tr></thead><tbody><tr><td>Bounds</td><td>Bounds</td><td>The Prop's reach.</td></tr><tr><td>BarrierBlockSet</td><td>BlockSet asset slot</td><td>Defines the types of blocks that can make up the solid terrain, through which the pond material cannot seep.</td></tr><tr><td>FillMaterial</td><td>MaterialProvider asset slot</td><td>Determines the types of blocks used when filling up the ponds (for example, water).</td></tr></tbody></table>
 
 ---
 
@@ -138,8 +194,8 @@ Important: The performance impact of this Prop can be relatively high depending 
 
 Imports an exported Prop.
 
-#### Parameters:
+##### Parameters
 
-| Name | Type   | Description        |
-| ---- | ------ | ------------------ |
-| Name | string | The exported Prop. |
+| Name | Type   | Description             |
+| ---- | ------ | ----------------------- |
+| Name | string | The exported Prop name. |

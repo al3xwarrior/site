@@ -8,31 +8,72 @@ authors:
 
 <OfficialDocumentationNotice />
 
-### Mesh2D
+### TriangularGrid2d
 
-Generates a mesh of random points on a 2D plane. You can set the points’ Y value.
+Generates a 2D infinite triangular mesh of positions with a distance of 1 block between them.
 
-#### Parameters:
-
-<table><thead><tr><th width="145.78228759765625">Name</th><th width="170.02972412109375">Type</th><th>Description</th></tr></thead><tbody><tr><td>PointGenerator</td><td>PointGenerator slot</td><td>Slot for a point generator asset. See the PointGenerator section below.</td></tr><tr><td>PointsY</td><td></td><td>The vertical Y position of every point.</td></tr></tbody></table>
-
-#### PointGenerator
-
-Generates a random point distribution in space.
-
-#### Parameters:
-
-<table><thead><tr><th width="87.80206298828125">Name</th><th width="169.3663330078125">Type</th><th>Description</th></tr></thead><tbody><tr><td>Jitter</td><td>decimal (0.0–0.5)</td><td>More jitter results in a more random point distribution. A good starting point is <code>0.2</code>.</td></tr><tr><td>ScaleX</td><td>positive decimal</td><td>Scales the distribution.</td></tr><tr><td>ScaleY</td><td>positive decimal</td><td>Scales the distribution.</td></tr><tr><td>ScaleZ</td><td>positive decimal</td><td>Scales the distribution.</td></tr><tr><td>Seed</td><td>string</td><td>The seed of this point generator.</td></tr></tbody></table>
+#### Parameters
+None
 
 ---
 
-### Mesh3D
+### SquareGrid2d
 
-Generates a mesh of random points in 3D space.
+Generates a 2D infinite square mesh of positions with a distance of 1 block between them.
 
-#### Parameters:
+#### Parameters
+None
 
-<table><thead><tr><th width="140.0792236328125">Name</th><th width="177.53466796875">Type</th><th>Description</th></tr></thead><tbody><tr><td>PointGenerator</td><td>PointGenerator slot</td><td>Slot for a point generator asset. See the PointGenerator section below.</td></tr></tbody></table>
+---
+
+### SquareGrid3d
+
+Generates a 3D infinite square mesh of positions with a distance of 1 block between them.
+
+#### Parameters
+None
+
+---
+
+### Scaler
+
+Scales the child Positions.
+
+#### Parameters
+
+<table><thead><tr><th width="124.871337890625">Name</th><th width="194.089111328125">Type</th><th>Description</th></tr></thead><tbody><tr><td>Positions</td><td>PositionProvider slot</td><td>Positions to scale.</td></tr><tr><td>Scale</td><td>3D decimal vector</td><td>Determines the scale.</td></tr></tbody></table>
+
+---
+
+### Jitter2d
+
+Adds jitter along the x/z plane.
+
+#### Parameters
+
+<table><thead><tr><th width="124.871337890625">Name</th><th width="194.089111328125">Type</th><th>Description</th></tr></thead><tbody><tr><td>Positions</td><td>PositionProvider slot</td><td>Positions to jitter.</td></tr><tr><td>Magnitude</td><td>decimal number</td><td>The maximum distance each position is allowed to travel from its original place when jittered. The actual movement distance is random for each position between 0 and the Magnitude.</td></tr><tr><td>Seed</td><td>string</td><td>Determines the direction and distance applied to each position.</td></tr></tbody></table>
+
+---
+
+### Jitter3d
+
+Adds jitter in all directions.
+
+#### Parameters
+
+<table><thead><tr><th width="124.871337890625">Name</th><th width="194.089111328125">Type</th><th>Description</th></tr></thead><tbody><tr><td>Positions</td><td>PositionProvider slot</td><td>Positions to jitter.</td></tr><tr><td>Magnitude</td><td>decimal number</td><td>The maximum distance each position is allowed to travel from its original place when jittered. The actual movement distance is random for each position between 0 and the Magnitude.</td></tr><tr><td>Seed</td><td>string</td><td>Determines the direction and distance applied to each position.</td></tr></tbody></table>
+
+---
+
+### Clusters
+
+Generates clusters of positions anchored by a Distributor PositionProvider. The cluster size is determined by the ClusterBounds, and the cluster contents are determined by the Cluster PositionProvider.
+
+The Cluster PositionProvider receives the cluster's position as an anchor.
+
+#### Parameters
+
+<table><thead><tr><th width="142.9307403564453">Name</th><th width="194.089111328125">Type</th><th>Description</th></tr></thead><tbody><tr><td>Cluster</td><td>PositionProvider slot</td><td>Positions making up the cluster.</td></tr><tr><td>Distributor</td><td>PositionProvider slot</td><td>Each cluster is anchored to one of these positions.</td></tr><tr><td>ClusterBounds</td><td>Bounds</td><td>The maximum size of a cluster around its anchor.</td></tr></tbody></table>
 
 ---
 
@@ -40,7 +81,7 @@ Generates a mesh of random points in 3D space.
 
 Allows you to manually define a static list of positions in world coordinates.
 
-#### Parameters:
+#### Parameters
 
 <table><thead><tr><th width="124.871337890625">Name</th><th width="172.22772216796875">Type</th><th>Description</th></tr></thead><tbody><tr><td>Positions</td><td>list of 3D positions</td><td>Each entry contains <code>X</code>, <code>Y</code>, and <code>Z</code>.</td></tr><tr><td>Positions[].X</td><td>integer</td><td></td></tr><tr><td>Positions[].Y</td><td>integer</td><td></td></tr><tr><td>Positions[].Z</td><td>integer</td><td></td></tr></tbody></table>
 
@@ -50,9 +91,9 @@ Allows you to manually define a static list of positions in world coordinates.
 
 Anchors the origin of the child Positions field to the contextual Anchor, if one exists. For a contextual Anchor to exist, a parent of this node must produce an Anchor.
 
-You can also reverse the effect later down the line to move the origin back to the world’s origin like in the screenshot below.
+You can also reverse the effect later in the chain to move the origin back to the world’s origin, as in the screenshot below.
 
-#### Parameters:
+#### Parameters
 
 <table><thead><tr><th width="95.40594482421875">Name</th><th width="113.336669921875">Type</th><th>Description</th></tr></thead><tbody><tr><td>Reverse</td><td>boolean</td><td>If <code>true</code>, reverses the origin of the child back to the world’s origin (or to the origin before the previous Anchor node).</td></tr></tbody></table>
 
@@ -62,11 +103,11 @@ You can also reverse the effect later down the line to move the origin back to t
 
 Limits the positions to a bounded region.
 
-<Callout type="info">
-  This can limit an infinite mesh for use as spawn points.
+<Callout>
+This can limit an infinite mesh for use as spawn points.
 </Callout>
 
-#### Parameters:
+#### Parameters
 
 <table><thead><tr><th width="107.76239013671875">Name</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>Bounds</td><td>decimal bounds 3D</td><td></td></tr></tbody></table>
 
@@ -76,9 +117,9 @@ Limits the positions to a bounded region.
 
 Enables masking out positions using a Density field. The delimiters determine the regions of the Density field where positions are kept.
 
-#### Parameters:
+#### Parameters
 
-<table><thead><tr><th width="160.9901123046875">Name</th><th width="216.0098876953125">Type</th><th>Description</th></tr></thead><tbody><tr><td>FieldFunction</td><td>Density slot</td><td>Slot for a Density input.</td></tr><tr><td>Delimiters</td><td>list of delimiters</td><td>List of Density value delimiters.</td></tr><tr><td>Delimiters[].Min</td><td>decimal number</td><td>Lower bound of the delimiter.</td></tr><tr><td>Delimiters[].Max</td><td>decimal number</td><td>Higher bound of the delimiter.</td></tr><tr><td>Positions</td><td>PositionsProvider slot</td><td>The positions on which the mask is applied.</td></tr></tbody></table>
+<table><thead><tr><th width="160.9901123046875">Name</th><th width="216.0098876953125">Type</th><th>Description</th></tr></thead><tbody><tr><td>FieldFunction</td><td>Density slot</td><td>Slot for a Density input.</td></tr><tr><td>Delimiters</td><td>list of delimiters</td><td>List of Density value delimiters.</td></tr><tr><td>Delimiters[].Min</td><td>decimal number</td><td>Lower bound of the delimiter.</td></tr><tr><td>Delimiters[].Max</td><td>decimal number</td><td>Higher bound of the delimiter.</td></tr><tr><td>Positions</td><td>PositionProvider slot</td><td>The positions on which the mask is applied.</td></tr></tbody></table>
 
 ---
 
@@ -86,9 +127,9 @@ Enables masking out positions using a Density field. The delimiters determine th
 
 Discards a percentage of input positions based on a Density field. The value of the Density field at each position determines the chance that the position is kept.
 
-- Positions where the Density value is less than or equal to 0.0 have a 0% chance of being kept.
-- Positions where the Density value is greater than or equal to 1.0 have a 100% chance of being kept.
-- Positions where the Density value is between 0.0 and 1.0 have a proportional percentage chance of being kept. _Example: 0.4 -> 40%._
+* Positions where the Density value is less than or equal to 0.0 have a 0% chance of being kept.
+* Positions where the Density value is greater than or equal to 1.0 have a 100% chance of being kept.
+* Positions where the Density value is between 0.0 and 1.0 have a proportional percentage chance of being kept. _Example: 0.4 → 40%._
 
 Below is an image showing a simple noise field used to create regions with rare oak trees and regions with dense oak trees.
 
@@ -96,9 +137,10 @@ Below is an image showing a simple noise field used to create regions with rare 
 
 ![Example of Occurrence PositionsProvider2](/assets/official-documentation/worldgen/technical-hytale-generator/positions-provider/occurrence-example-2.png)
 
-#### Parameters:
 
-<table><thead><tr><th width="141.02972412109375">Name</th><th width="205.0989990234375">Type</th><th>Description</th></tr></thead><tbody><tr><td>FieldFunction</td><td>Density slot</td><td>Determines the chance of keeping the positions.</td></tr><tr><td>Seed</td><td>string</td><td>Determines the outcome.</td></tr><tr><td>Positions</td><td>PositionsProvider slot</td><td></td></tr></tbody></table>
+#### Parameters
+
+<table><thead><tr><th width="141.02972412109375">Name</th><th width="205.0989990234375">Type</th><th>Description</th></tr></thead><tbody><tr><td>FieldFunction</td><td>Density slot</td><td>Determines the chance of keeping the positions.</td></tr><tr><td>Seed</td><td>string</td><td>Determines the outcome.</td></tr><tr><td>Positions</td><td>PositionProvider slot</td><td></td></tr></tbody></table>
 
 ---
 
@@ -106,23 +148,21 @@ Below is an image showing a simple noise field used to create regions with rare 
 
 Offsets the positions by the provided vector.
 
-#### Parameters:
+#### Parameters
 
-<table><thead><tr><th width="180">Name</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>OffsetX</td><td>decimal number</td><td>Vector’s X.</td></tr><tr><td>OffsetY</td><td>decimal number</td><td>Vector’s Y.</td></tr><tr><td>OffsetZ</td><td>decimal number</td><td>Vector’s Z.</td></tr><tr><td>Positions</td><td>PositionsProvider slot</td><td>Positions to offset.</td></tr></tbody></table>
+<table><thead><tr><th width="180">Name</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>Offset</td><td>3D decimal vector</td><td>Offset vector.</td></tr><tr><td>Positions</td><td>PositionProvider slot</td><td>Positions to offset.</td></tr></tbody></table>
 
 ---
 
 ### BaseHeight
 
-Vertically offsets the Positions inside the configured vertical region by the number of blocks determined by the referenced DecimalConstant. All Positions outside the region are discarded.
+Vertically offsets the Positions inside the configured vertical region by the number of blocks determined by the referenced DecimalConstant.
 
-A typical application of this would be to grab Positions at `Y: 0` and offset them up by the DecimalConstant to come closer to a terrain feature. Further adjustments can then be made using an Offset PositionsProvider node. The diagram below illustrates that.
+A typical application of this would be to grab Positions at `Y: 0` and offset them up by the DecimalConstant to get closer to a terrain feature. Further adjustments can then be made using an Offset PositionsProvider node.
 
-{/* <figure><img src="../../.gitbook/assets/image (48).png" alt=""><figcaption></figcaption></figure> */}
+#### Parameters
 
-#### Parameters:
-
-<table><thead><tr><th width="180">Name</th><th width="178.445556640625">Type</th><th>Description</th></tr></thead><tbody><tr><td>BaseHeightName</td><td>string</td><td>Name of the DecimalConstant to reference.</td></tr><tr><td>MaxYRead</td><td>decimal number</td><td>Exclusive limit of the region to grab the Positions from the input.</td></tr><tr><td>MinYRead</td><td>decimal number</td><td>Inclusive limit of the region to grab the Positions from the input.</td></tr></tbody></table>
+<table><thead><tr><th width="180">Name</th><th width="178.445556640625">Type</th><th>Description</th></tr></thead><tbody><tr><td>BaseHeightName</td><td>string</td><td>Name of the DecimalConstant to reference.</td></tr></tbody></table>
 
 ---
 
@@ -130,9 +170,9 @@ A typical application of this would be to grab Positions at `Y: 0` and offset th
 
 Combines all positions into a single Positions field.
 
-#### Parameters:
+#### Parameters
 
-<table><thead><tr><th width="180">Name</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>Positions</td><td>list of PositionsProvider slots</td><td></td></tr></tbody></table>
+<table><thead><tr><th width="180">Name</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>Positions</td><td>list of PositionProvider slots</td><td></td></tr></tbody></table>
 
 ---
 
@@ -140,9 +180,9 @@ Combines all positions into a single Positions field.
 
 Keeps only positions within the provided Y range.
 
-#### Parameters:
+#### Parameters
 
-<table><thead><tr><th width="180">Name</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>RangeY</td><td>decimal number</td><td>The Y range to keep the position in.</td></tr><tr><td>Positions</td><td>PositionsProvider slot</td><td></td></tr></tbody></table>
+<table><thead><tr><th width="180">Name</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>RangeY</td><td>decimal number</td><td>The Y range to keep the positions in.</td></tr><tr><td>Positions</td><td>PositionProvider slot</td><td></td></tr></tbody></table>
 
 ---
 
@@ -156,9 +196,9 @@ I recommend that you don’t use this cache everywhere in your Positions trees, 
 
 This cache functions by saving 3D sections of space containing the Positions (points) generated by the child slot. The sections are cubes, and their size is determined by the asset’s SectionSize parameter. The number of sections allowed to be saved in the cache is determined by the CacheSize asset parameter. A safe starting value for the SectionSize parameter would be 32, and a safe starting value for the CacheSize would be 50.
 
-#### Parameters:
+#### Parameters
 
-<table><thead><tr><th width="138.17822265625">Name</th><th width="187.089111328125">Type</th><th>Description</th></tr></thead><tbody><tr><td>SectionSize</td><td>integer (> 0)</td><td>Determines the side length of each section cube, in blocks. A safe starting value is <code>32</code>.</td></tr><tr><td>CacheSize</td><td>integer (>= 0)</td><td>Determines how many sections can be saved in memory. A safe starting value is <code>50</code>. If set to <code>0</code>, the cache is ignored and positions are sourced directly from the child slot.</td></tr><tr><td>Positions</td><td>PositionsProvider slot</td><td>The output of this Positions asset is cached.</td></tr></tbody></table>
+<table><thead><tr><th width="138.17822265625">Name</th><th width="187.089111328125">Type</th><th>Description</th></tr></thead><tbody><tr><td>SectionSize</td><td>integer (> 0)</td><td>Determines the side length of each section cube, in blocks. A safe starting value is <code>32</code>.</td></tr><tr><td>CacheSize</td><td>integer (>= 0)</td><td>Determines how many sections can be saved in memory. A safe starting value is <code>50</code>. If set to <code>0</code>, the cache is ignored and positions are sourced directly from the child slot.</td></tr><tr><td>Positions</td><td>PositionProvider slot</td><td>The output of this Positions asset is cached.</td></tr></tbody></table>
 
 ---
 
@@ -166,6 +206,6 @@ This cache functions by saving 3D sections of space containing the Positions (po
 
 Imports an exported PositionsProvider.
 
-#### Parameters:
+#### Parameters
 
 <table><thead><tr><th width="180">Name</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>Name</td><td>string</td><td>The exported PositionsProvider.</td></tr></tbody></table>
