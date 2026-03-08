@@ -25,12 +25,22 @@ description: "Learn the basics of Java programming."
 authors:
     - name: "Your Name"
       url: "https://yourwebsite.com"
+icon: YourIcon 
 ---
 ```
 
 Now as you can see, it's pretty self explanatory, you just need to fill in the details for your specific guide. If you don't have a URL you want to link yourself to, just don't write that whole line. Additionally, the authors section is optional, so if you don't want to add it, you can just leave it out although we encourage you to do so and credit yourself. 
 
 The indentation in the frontmatter is important, so make sure to keep it consistent with the example.
+
+### Icons
+
+If you want to add an icon for your page then you should use [Lucide](https://lucide.dev/).
+
+1. Go to the [site](https://lucide.dev/) and find an icon you like.
+2. Once you have selected an icon, click on it, then click "See in action"
+3. Next, click on "React" which we are using. Next, click on "React" which is what we are using. You will only need the text in the curly brackets on the first line.
+4. Next, simply paste `icon: YourIcon` into Frontmatter.
 
 ## Content Structure
 
@@ -84,18 +94,17 @@ These are types of callouts, they are optional, they show how complex your page 
 There are 3 main types of complexity.
 
 <Callout type="lvl_beginner">
-    Use `lvl_beginner`.
+    Use `lvl_beginner`. This page contains information for those who are starting out with modding.
 </Callout>
 <Callout type="lvl_intermediate">
-    Use `lvl_intermediate`.
+    Use `lvl_intermediate` This page contains information for those who want to deepen their knowledge.
 </Callout>
 <Callout type="lvl_advanced">
-   Use `lvl_advanced`.
+   Use `lvl_advanced`This page contains information for those who already know how to make quality mods, and contains something additional.
 </Callout>
 
 Their usage is the same as in callout, but we would advise not to change the title. Inside, 
 you write why your page is classified as this type and what the user should know.
-
 
 ## Conclusion
 

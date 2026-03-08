@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { Info, AlertTriangle, XCircle, CheckCircle } from "lucide-react";
+import { Info, AlertTriangle, XCircle, CheckCircle, GraduationCap} from "lucide-react";
 import { LuGraduationCap } from "react-icons/lu";
 
 interface CalloutProps {
@@ -26,9 +26,9 @@ const icons = {
   warning: AlertTriangle,
   danger: XCircle,
   success: CheckCircle,
-  lvl_beginner: LuGraduationCap,
-  lvl_intermediate: LuGraduationCap,
-  lvl_advanced: LuGraduationCap
+  lvl_beginner: GraduationCap,
+  lvl_intermediate: GraduationCap,
+  lvl_advanced: GraduationCap
 };
 
 const defaultTitles = {
